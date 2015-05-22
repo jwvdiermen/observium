@@ -29,3 +29,7 @@ else
   sed -i "s#\;date\.timezone\ \=#date\.timezone\ \=\ UTC#g" /etc/php5/cli/php.ini
   sed -i "s#\;date\.timezone\ \=#date\.timezone\ \=\ UTC#g" /etc/php5/apache2/php.ini
 fi
+
+if [ ! -f /etc/container_environment/POLLER ] ; then
+  export POLLER=4
+fi

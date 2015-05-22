@@ -3,7 +3,7 @@
 # See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
 # a list of version numbers.
 FROM phusion/baseimage:0.9.16
-MAINTAINER Zuhkov <zuhkov@gmail.com>
+MAINTAINER Seti <sebastian.koehlmeier@kyberna.com>
 
 # Set correct environment variables.
 ENV HOME /root
@@ -47,7 +47,8 @@ RUN apt-get update -q && \
     apt-get install -y --no-install-recommends mariadb-server mariadb-client \
       libapache2-mod-php5 php5-cli php5-json wget unzip software-properties-common pwgen \
       php5-mysql php5-gd php5-mcrypt python-mysqldb rrdtool subversion whois mtr-tiny at \
-      nmap ipmitool graphviz imagemagick php5-snmp php-pear snmp graphviz fping libvirt-bin
+      nmap ipmitool graphviz imagemagick php5-snmp php-pear snmp graphviz fping libvirt-bin \
+	  apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Tweak my.cnf
 RUN sed -i -e 's#\(bind-address.*=\).*#\1 127.0.0.1#g' /etc/mysql/my.cnf && \
@@ -101,9 +102,6 @@ RUN rm /etc/apache2/sites-available/default-ssl.conf && \
 # Setup Observium cron jobs
 COPY cron-observium /etc/cron.d/observium
 
-EXPOSE 8668/tcp
+EXPOSE 80/tcp
 
 VOLUME ["/config","/opt/observium/logs","/opt/observium/rrd"]
-
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
