@@ -29,7 +29,6 @@ docker run -d \
 	seti/observium
 ```
 ###with custom timezone
-
 ```
 docker run -d \
 	-v /hostDir/config:/config \

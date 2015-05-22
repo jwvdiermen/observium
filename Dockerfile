@@ -47,7 +47,7 @@ RUN apt-get update -q && \
     apt-get install -y --no-install-recommends mariadb-server mariadb-client \
       libapache2-mod-php5 php5-cli php5-json wget unzip software-properties-common pwgen \
       php5-mysql php5-gd php5-mcrypt python-mysqldb rrdtool subversion whois mtr-tiny at \
-      nmap ipmitool graphviz imagemagick php5-snmp php-pear snmp graphviz fping libvirt-bin \
+      nmap ipmitool graphviz imagemagick php5-snmp php-pear snmp graphviz fping libvirt-bin && \
 	  apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Tweak my.cnf
