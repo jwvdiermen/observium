@@ -31,5 +31,6 @@ else
 fi
 
 if [ ! -f /etc/container_environment/POLLER ] ; then
-  export POLLER=4
+	POLLER=16
 fi
+sed -i "s/#PC#/$POLLER/g" /etc/cron.d/observium

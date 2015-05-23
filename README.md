@@ -24,7 +24,7 @@ docker run -d \
 	-v /hostDir/logs:/opt/observium/logs \
 	-v /hostDir/rrd:/opt/observium/rrd \
 	-p 80:80 \
-	-e POLLER=10 \
+	-e POLLER=24 \
 	--name observium \
 	seti/observium
 ```
@@ -36,7 +36,7 @@ docker run -d \
 	-v /hostDir/rrd:/opt/observium/rrd \
 	-p 80:80 \
 	-e TZ="America/Chicago" \
-	-e POLLER=10 \
+	-e POLLER=24 \
 	--name observium \
 	seti/observium
 ```
@@ -46,7 +46,7 @@ Browse to ```http://your-host-ip``` and login with user and password `observium`
 ---
 Environment Vars
 ===
-- **POLLER**: Set poller count. Defaults to `4`
+- **POLLER**: Set poller count. Defaults to `16`
 - **TZ**: Set timezone. Defaults to `UTC`
 
 ---
