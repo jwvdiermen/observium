@@ -92,7 +92,7 @@ DB_NAME=${DB_NAME:-gitlabhq_production}
 
 sed -i -e "s/\$config\['db_pass'\] = 'PASSWORD';/\$config\['db_pass'\] = '$DB_PASS';/g" /data/config/config.php
 sed -i -e "s/\$config\['db_user'\] = 'USERNAME';/\$config\['db_user'\] = '$DB_USER';/g" /data/config/config.php
-sed -i -e "s/\$config\['db_host'\] = '*';/\$config\['db_host'\] = '$DB_HOST';/g" /data/config/config.php
+sed -i -e "s/\$config\['db_host'\] = '.*';/\$config\['db_host'\] = '$DB_HOST';/g" /data/config/config.php
 sed -i -e "s/\$config\['db_name'\] = 'observium';/\$config\['db_name'\] = '$DB_NAME';/g" /data/config/config.php
 sed -i "/\$config\['rrd_dir'\].*;/d" /data/config/config.php
 sed -i "/\$config\['log_file'\].*;/d" /data/config/config.php
