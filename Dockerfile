@@ -6,18 +6,17 @@ FROM phusion/baseimage:0.9.16
 MAINTAINER Seti <seti@setadesign.net>
 
 # Set correct environment variables.
-ENV HOME /root
-ENV DEBIAN_FRONTEND noninteractive
-ENV LC_ALL C.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
+ENV HOME=/root \
+	DEBIAN_FRONTEND=noninteractive \
+	LC_ALL=C.UTF-8 \
+	LANG=en_US.UTF-8 \
+	LANGUAGE=en_US.UTF-8
 
-COPY init.sh /etc/my_init.d/init.sh \
-	apache2.conf /etc/apache2/apache2.conf \
-	ports.conf /etc/apache2/ports.conf \
-	apache-observium /etc/apache2/sites-available/000-default.conf \
-	apache2.sh /etc/service/apache2/run \
-	cron-observium /etc/cron.d/observium
+COPY init.sh /etc/my_init.d/init.sh
+COPY apache2.conf ports.conf /etc/apache2/
+COPY apache-observium /etc/apache2/sites-available/000-default.conf
+COPY apache2.sh /etc/service/apache2/run
+COPY cron-observium /etc/cron.d/observium
 #COPY initdb.sh /etc/my_init.d/initdb.sh
 
 # Use baseimage-docker's init system
