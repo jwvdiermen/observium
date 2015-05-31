@@ -13,17 +13,32 @@ Usage example
 ===
 ###Needed directories on host:
 - data
+- mysql
+
+### with sameersbn/mysql as database
 
 ```
+NAME="observium"
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+docker run -d -m 1g \
+	-v $DIR/mysql:/var/lib/mysql \
+	-e DB_USER=$NAME \
+	-e DB_PASS=observiumpwd \
+	-e DB_NAME=$NAME \
+	--name $NAME-db \
+	sameersbn/mysql:latest
+```
+
+```
+NAME="observium"
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 docker run -d \
-	-v /hostDir/config:/config \
-	-v /hostDir/logs:/opt/observium/logs \
-	-v /hostDir/rrd:/opt/observium/rrd \
+	-v $DIR/data:/data \
 	-p 80:80 \
 	-e TZ="Europe/Austria" \
-	--link observium-db:mysql \
+	--link $NAME-db:mysql \
 	-e POLLER=24 \
-	--name observium \
+	--name $NAME \
 	seti/observium
 ```
 

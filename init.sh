@@ -4,12 +4,15 @@ atd
 
 if [ ! -f /data/config ]; then
 	mkdir /data/config
+	chown nobody:users /data/config
 fi
 if [ ! -f /data/rrd ]; then
 	mkdir /data/rrd
+	chown nobody:users /data/rrd
 fi
 if [ ! -f /data/logs ]; then
 	mkdir /data/logs
+	chown nobody:users /data/logs
 fi
 
 # Check if PHP database config exists. If not, copy in the default config
