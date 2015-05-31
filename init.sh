@@ -2,6 +2,16 @@
 
 atd
 
+if [ ! -f /data/config ]; then
+	mkdir /data/config
+fi
+if [ ! -f /data/rrd ]; then
+	mkdir /data/rrd
+fi
+if [ ! -f /data/logs ]; then
+	mkdir /data/logs
+fi
+
 # Check if PHP database config exists. If not, copy in the default config
 if [ -f /data/config/config.php ]; then
 	echo "Using existing PHP database config file."
