@@ -51,6 +51,11 @@ Environment Vars
 - **TZ**: Set timezone. Defaults to `UTC`
 
 ---
+Convert from older version with integrated DB to new
+===
+
+
+---
 Credits
 ===
 

@@ -2,15 +2,15 @@
 
 atd
 
-if [ ! -f /data/config ]; then
+if [ ! -d /data/config ]; then
 	mkdir /data/config
 	chown nobody:users /data/config
 fi
-if [ ! -f /data/rrd ]; then
+if [ ! -d /data/rrd ]; then
 	mkdir /data/rrd
 	chown nobody:users /data/rrd
 fi
-if [ ! -f /data/logs ]; then
+if [ ! -d /data/logs ]; then
 	mkdir /data/logs
 	chown nobody:users /data/logs
 fi

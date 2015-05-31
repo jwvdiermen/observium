@@ -10,8 +10,8 @@
               AllowOverride All
               Require all granted
       </Directory>
-       ErrorLog  /opt/observium/logs/error_log
+       ErrorLog  /data/logs/error_log
        LogLevel warn
-       CustomLog  /opt/observium/logs/access_log combined
+       CustomLog  /data/logs/access_log combined
        ServerSignature On
 </VirtualHost>
