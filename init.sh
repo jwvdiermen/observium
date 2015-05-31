@@ -3,16 +3,16 @@
 atd
 
 # Check if PHP database config exists. If not, copy in the default config
-if [ -f /config/config.php ]; then
+if [ -f /data/config/config.php ]; then
 	echo "Using existing PHP database config file."
 	echo "/opt/observium/discovery.php -u" | at -M now + 1 minute
 else
 	echo "Loading PHP config from default."
-	cp /opt/observium/config.php.default /config/config.php
-	chown nobody:users /config/config.php
+	cp /opt/observium/config.php.default /data/config/config.php
+	chown nobody:users /data/config/config.php
 fi
 
-ln -s /config/config.php /opt/observium/config.php
+ln -s /data/config/config.php /opt/observium/config.php
 chown nobody:users -R /opt/observium
 chmod 755 -R /opt/observium
 
@@ -22,6 +22,7 @@ if [ ! -f /etc/container_environment/TZ ] ; then
 fi
 
 if [ ! -f /etc/container_environment/POLLER ] ; then
+	echo 16 > /etc/container_environment/POLLER
 	POLLER=16
 fi
 
@@ -76,10 +77,16 @@ esac
 DB_USER=${DB_USER:-root}
 DB_NAME=${DB_NAME:-gitlabhq_production}
 
-sed -i -e 's/PASSWORD/'$DB_PASS'/g' /config/config.php
-sed -i -e 's/USERNAME/'$DB_USER'/g' /config/config.php
-sed -i -e 's/localhost/'$DB_HOST'/g' /config/config.php
-sed -i -e "s/$config['db_name'] = 'observium';/$config['db_name'] = '$DB_NAME';/g" /config/config.php
+sed -i -e "s/\$config\['db_pass'\] = 'PASSWORD';/\$config\['db_pass'\] = '$DB_PASS';/g" /data/config/config.php
+sed -i -e "s/\$config\['db_user'\] = 'USERNAME';/\$config\['db_user'\] = '$DB_USER';/g" /data/config/config.php
+sed -i -e "s/\$config\['db_host'\] = '*';/\$config\['db_host'\] = '$DB_HOST';/g" /data/config/config.php
+sed -i -e "s/\$config\['db_name'\] = 'observium';/\$config\['db_name'\] = '$DB_NAME';/g" /data/config/config.php
+sed -i -e "/\$config\['rrd_dir'\].*;/d" /data/config/config.php
+sed -i -e "/\$config\['log_file'\].*;/d" /data/config/config.php
+sed -i -e "/\$config\['log_dir'\].*;/d" /data/config/config.php
+echo "$config['rrd_dir']       = \"/data/rrd\";" >> /data/config/config.php
+echo "$config['log_file']      = \"/data/logs/observium.log\";" >> /data/config/config.php
+echo "$config['log_dir']       = \"/data/logs\";" >> /data/config/config.php
 
 prog="mysqladmin -h ${DB_HOST} -P ${DB_PORT} -u ${DB_USER} ${DB_PASS:+-p$DB_PASS} status"
 timeout=60

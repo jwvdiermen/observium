@@ -34,7 +34,7 @@ RUN \
 		php5-mysql php5-gd php5-mcrypt python-mysqldb rrdtool subversion whois mtr-tiny at \
 		nmap ipmitool graphviz imagemagick php5-snmp php-pear snmp graphviz fping libvirt-bin && \
 		apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-	mkdir -p /opt/observium/firstrun /opt/observium/logs /opt/observium/rrd /config && \
+	mkdir -p /opt/observium/firstrun /data/logs /data/rrd /data/config && \
     cd /opt && \
     wget http://www.observium.org/observium-community-latest.tar.gz && \
     tar zxvf observium-community-latest.tar.gz && \
@@ -58,4 +58,5 @@ RUN \
 
 EXPOSE 80/tcp
 
-VOLUME ["/config","/opt/observium/logs","/opt/observium/rrd"]
+#VOLUME ["/config","/opt/observium/logs","/opt/observium/rrd"]
+VOLUME ["/data"]
