@@ -12,6 +12,14 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
+COPY init.sh /etc/my_init.d/init.sh \
+	apache2.conf /etc/apache2/apache2.conf \
+	ports.conf /etc/apache2/ports.conf \
+	apache-observium /etc/apache2/sites-available/000-default.conf \
+	apache2.sh /etc/service/apache2/run \
+	cron-observium /etc/cron.d/observium
+#COPY initdb.sh /etc/my_init.d/initdb.sh
+
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init"]
 
@@ -34,23 +42,12 @@ RUN \
 	php5enmod mcrypt && a2enmod rewrite && \
 	mkdir /etc/service/apache2 && \
 	rm /etc/apache2/sites-available/default-ssl.conf && \
-	rm -Rf /var/www
-COPY apache2.sh /etc/service/apache2/run
-
-COPY firstrun.sh /etc/my_init.d/firstrun.sh
-COPY initdb.sh /etc/my_init.d/initdb.sh
-RUN chmod +x /etc/service/apache2/run && \
-	chmod +x /etc/my_init.d/firstrun.sh && \
+	rm -Rf /var/www && chmod +x /etc/service/apache2/run && \
+	chmod +x /etc/my_init.d/init.sh && \
     chown -R nobody:users /opt/observium && \
     chmod 755 -R /opt/observium && \
     chown -R nobody:users /config && \
-    chmod 755 -R /config
-
-# Configure apache2 to serve Observium app
-COPY apache2.conf /etc/apache2/apache2.conf
-COPY ports.conf /etc/apache2/ports.conf
-COPY apache-observium /etc/apache2/sites-available/000-default.conf
-RUN echo www-data > /etc/container_environment/APACHE_RUN_USER && \
+    chmod 755 -R /config && echo www-data > /etc/container_environment/APACHE_RUN_USER && \
     echo www-data > /etc/container_environment/APACHE_RUN_GROUP && \
     echo /var/log/apache2 > /etc/container_environment/APACHE_LOG_DIR && \
     echo /var/lock/apache2 > /etc/container_environment/APACHE_LOCK_DIR && \
@@ -58,10 +55,6 @@ RUN echo www-data > /etc/container_environment/APACHE_RUN_USER && \
     echo /var/run/apache2 > /etc/container_environment/APACHE_RUN_DIR && \
     chown -R www-data:www-data /var/log/apache2 && \
     ln -s /opt/observium/html /var/www
-
-
-# Setup Observium cron jobs
-COPY cron-observium /etc/cron.d/observium
 
 EXPOSE 80/tcp
 
