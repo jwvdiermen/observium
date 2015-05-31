@@ -3,7 +3,7 @@
 # See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
 # a list of version numbers.
 FROM phusion/baseimage:0.9.16
-MAINTAINER Seti <sebastian.koehlmeier@kyberna.com>
+MAINTAINER Seti <seti@setadesign.net>
 
 # Set correct environment variables.
 ENV HOME /root
@@ -46,8 +46,8 @@ RUN \
 	chmod +x /etc/my_init.d/init.sh && \
     chown -R nobody:users /opt/observium && \
     chmod 755 -R /opt/observium && \
-    chown -R nobody:users /config && \
-    chmod 755 -R /config && echo www-data > /etc/container_environment/APACHE_RUN_USER && \
+    chown -R nobody:users /data/config && \
+    chmod 755 -R /data/config && echo www-data > /etc/container_environment/APACHE_RUN_USER && \
     echo www-data > /etc/container_environment/APACHE_RUN_GROUP && \
     echo /var/log/apache2 > /etc/container_environment/APACHE_LOG_DIR && \
     echo /var/lock/apache2 > /etc/container_environment/APACHE_LOCK_DIR && \
