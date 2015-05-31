@@ -13,8 +13,6 @@ ENV HOME=/root \
 	LANGUAGE=en_US.UTF-8
 
 COPY init.sh /etc/my_init.d/init.sh
-COPY apache2.conf ports.conf /etc/apache2/
-COPY apache-observium /etc/apache2/sites-available/000-default.conf
 COPY apache2.sh /etc/service/apache2/run
 COPY cron-observium /etc/cron.d/observium
 #COPY initdb.sh /etc/my_init.d/initdb.sh
@@ -33,13 +31,12 @@ RUN \
 		php5-mysql php5-gd php5-mcrypt python-mysqldb rrdtool subversion whois mtr-tiny at \
 		nmap ipmitool graphviz imagemagick php5-snmp php-pear snmp graphviz fping libvirt-bin && \
 		apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-	mkdir -p /opt/observium/firstrun /data/logs /data/rrd /data/config && \
+	mkdir -p /data/logs /data/rrd /data/config && \
     cd /opt && \
     wget http://www.observium.org/observium-community-latest.tar.gz && \
     tar zxvf observium-community-latest.tar.gz && \
     rm observium-community-latest.tar.gz && \
 	php5enmod mcrypt && a2enmod rewrite && \
-	mkdir /etc/service/apache2 && \
 	rm /etc/apache2/sites-available/default-ssl.conf && \
 	rm -Rf /var/www && chmod +x /etc/service/apache2/run && \
 	chmod +x /etc/my_init.d/init.sh && \
@@ -54,6 +51,9 @@ RUN \
     echo /var/run/apache2 > /etc/container_environment/APACHE_RUN_DIR && \
     chown -R www-data:www-data /var/log/apache2 && \
     ln -s /opt/observium/html /var/www
+
+COPY apache2.conf ports.conf /etc/apache2/
+COPY apache-observium /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80/tcp
 
