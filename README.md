@@ -1,12 +1,10 @@
 Observium
 ====
 
-Dockerfile for Observium with embedded MariaDB (MySQL) Database
-
 Observium is an autodiscovering network monitoring platform supporting a wide range of hardware platforms and operating systems
 
 ---
-###Forked from
+###Originally forked from
 
 Zuhkov <zuhkov@gmail.com>
 
@@ -14,30 +12,33 @@ Zuhkov <zuhkov@gmail.com>
 Usage example
 ===
 ###Needed directories on host:
-- config
-- logs
-- rrd
+- data
+- mysql
+
+### with sameersbn/mysql as database
 
 ```
-docker run -d \
-	-v /hostDir/config:/config \
-	-v /hostDir/logs:/opt/observium/logs \
-	-v /hostDir/rrd:/opt/observium/rrd \
-	-p 80:80 \
-	-e POLLER=24 \
-	--name observium \
-	seti/observium
+NAME="observium"
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+docker run -d -m 1g \
+	-v $DIR/mysql:/var/lib/mysql \
+	-e DB_USER=$NAME \
+	-e DB_PASS=observiumpwd \
+	-e DB_NAME=$NAME \
+	--name $NAME-db \
+	sameersbn/mysql:latest
 ```
-###with custom timezone
+
 ```
+NAME="observium"
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 docker run -d \
-	-v /hostDir/config:/config \
-	-v /hostDir/logs:/opt/observium/logs \
-	-v /hostDir/rrd:/opt/observium/rrd \
+	-v $DIR/data:/data \
 	-p 80:80 \
-	-e TZ="America/Chicago" \
+	-e TZ="Europe/Austria" \
+	--link $NAME-db:mysql \
 	-e POLLER=24 \
-	--name observium \
+	--name $NAME \
 	seti/observium
 ```
 
@@ -48,6 +49,27 @@ Environment Vars
 ===
 - **POLLER**: Set poller count. Defaults to `16`
 - **TZ**: Set timezone. Defaults to `UTC`
+
+---
+Convert from older version with integrated DB to new container
+===
+- we use "ocontainer" as container name. replace it with your name.
+```
+mkdir mysql
+docker exec -it ocontainer mysqldump observium > mysql/observiumdb.sql
+mkdir data
+mv config data/ && mv rrd data/ && mv logs data/
+chown nobody:users data -R
+```
+- now run your db container, we use the example from above, then run this command (observium-db is the container name)
+```
+echo "#!/bin/bash" > mysql/import.sh
+echo "mysql -u observium -pobserviumpwd observium < /var/lib/mysql/observiumdb.sql" >> mysql/import.sh
+chmod 0755 mysql/import.sh
+docker exec -it observium-db bash /var/lib/mysql/import.sh
+rm -f mysql/import.sh mysql/observiumdb.sql
+```
+- now run your observium container, like the example from above
 
 ---
 Credits
