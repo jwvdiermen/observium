@@ -49,7 +49,6 @@ DB_PORT=${DB_PORT:-}
 DB_NAME=${DB_NAME:-}
 DB_USER=${DB_USER:-}
 DB_PASS=${DB_PASS:-}
-DB_POOL=${DB_POOL:-10}
 
 if [ -n "${MYSQL_PORT_3306_TCP_ADDR}" ]; then
 	DB_TYPE=${DB_TYPE:-mysql}

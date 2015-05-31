@@ -51,9 +51,25 @@ Environment Vars
 - **TZ**: Set timezone. Defaults to `UTC`
 
 ---
-Convert from older version with integrated DB to new
+Convert from older version with integrated DB to new container
 ===
-
+- we use "ocontainer" as container name. replace it with your name.
+```
+mkdir mysql
+docker exec -it ocontainer mysqldump observium > mysql/observiumdb.sql
+mkdir data
+mv config data/ && mv rrd data/ && mv logs data/
+chown nobody:users data -R
+```
+- now run your db container, we use the example from above, then run this command (observium-db is the container name)
+```
+echo "#!/bin/bash" > mysql/import.sh
+echo "mysql -u observium -pobserviumpwd observium < /var/lib/mysql/observiumdb.sql" >> mysql/import.sh
+chmod 0755 mysql/import.sh
+docker exec -it observium-db bash /var/lib/mysql/import.sh
+rm -f mysql/import.sh mysql/observiumdb.sql
+```
+- now run your observium container, like the example from above
 
 ---
 Credits

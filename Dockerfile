@@ -15,7 +15,6 @@ ENV HOME=/root \
 COPY init.sh /etc/my_init.d/init.sh
 COPY apache2.sh /etc/service/apache2/run
 COPY cron-observium /etc/cron.d/observium
-#COPY initdb.sh /etc/my_init.d/initdb.sh
 
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init"]
@@ -27,7 +26,7 @@ RUN \
 	locale-gen de_DE.UTF-8 && locale-gen en_US.UTF-8 && \
 	apt-get update -q && \
     apt-get install -y --no-install-recommends \
-		libapache2-mod-php5 php5-cli php5-json wget unzip software-properties-common pwgen \
+		mysql-client libapache2-mod-php5 php5-cli php5-json wget unzip software-properties-common \
 		php5-mysql php5-gd php5-mcrypt python-mysqldb rrdtool subversion whois mtr-tiny at \
 		nmap ipmitool graphviz imagemagick php5-snmp php-pear snmp graphviz fping libvirt-bin && \
 		apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
@@ -57,5 +56,4 @@ COPY apache-observium /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80/tcp
 
-#VOLUME ["/config","/opt/observium/logs","/opt/observium/rrd"]
 VOLUME ["/data"]
