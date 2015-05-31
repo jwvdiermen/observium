@@ -94,12 +94,12 @@ sed -i -e "s/\$config\['db_pass'\] = 'PASSWORD';/\$config\['db_pass'\] = '$DB_PA
 sed -i -e "s/\$config\['db_user'\] = 'USERNAME';/\$config\['db_user'\] = '$DB_USER';/g" /data/config/config.php
 sed -i -e "s/\$config\['db_host'\] = '*';/\$config\['db_host'\] = '$DB_HOST';/g" /data/config/config.php
 sed -i -e "s/\$config\['db_name'\] = 'observium';/\$config\['db_name'\] = '$DB_NAME';/g" /data/config/config.php
-sed -i -e "/\$config\['rrd_dir'\].*;/d" /data/config/config.php
-sed -i -e "/\$config\['log_file'\].*;/d" /data/config/config.php
-sed -i -e "/\$config\['log_dir'\].*;/d" /data/config/config.php
-echo "$config['rrd_dir']       = \"/data/rrd\";" >> /data/config/config.php
-echo "$config['log_file']      = \"/data/logs/observium.log\";" >> /data/config/config.php
-echo "$config['log_dir']       = \"/data/logs\";" >> /data/config/config.php
+sed -i "/\$config\['rrd_dir'\].*;/d" /data/config/config.php
+sed -i "/\$config\['log_file'\].*;/d" /data/config/config.php
+sed -i "/\$config\['log_dir'\].*;/d" /data/config/config.php
+echo "\$config['rrd_dir']       = \"/data/rrd\";" >> /data/config/config.php
+echo "\$config['log_file']      = \"/data/logs/observium.log\";" >> /data/config/config.php
+echo "\$config['log_dir']       = \"/data/logs\";" >> /data/config/config.php
 
 prog="mysqladmin -h ${DB_HOST} -P ${DB_PORT} -u ${DB_USER} ${DB_PASS:+-p$DB_PASS} status"
 timeout=60
