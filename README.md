@@ -35,7 +35,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 docker run -d \
 	-v $DIR/data:/data \
 	-p 80:80 \
-	-e TZ="Europe/Austria" \
+	-e TZ="Europe/Vienna" \
 	--link $NAME-db:mysql \
 	-e POLLER=24 \
 	--name $NAME \
@@ -54,6 +54,7 @@ Environment Vars
 Convert from older version with integrated DB to new container
 ===
 - we use "ocontainer" as container name. replace it with your name.
+
 ```
 mkdir mysql
 docker exec -it ocontainer mysqldump observium > mysql/observiumdb.sql
@@ -61,14 +62,18 @@ mkdir data
 mv config data/ && mv rrd data/ && mv logs data/
 chown nobody:users data -R
 ```
+
 - now run your db container, we use the example from above, then run this command (observium-db is the container name)
+
 ```
 echo "#!/bin/bash" > mysql/import.sh
 echo "mysql -u observium -pobserviumpwd observium < /var/lib/mysql/observiumdb.sql" >> mysql/import.sh
 chmod 0755 mysql/import.sh
 docker exec -it observium-db bash /var/lib/mysql/import.sh
 rm -f mysql/import.sh mysql/observiumdb.sql
+rm data/config/databases -rf
 ```
+
 - now run your observium container, like the example from above
 
 ---
