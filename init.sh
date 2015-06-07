@@ -87,7 +87,7 @@ esac
 
 # set default user and database
 DB_USER=${DB_USER:-root}
-DB_NAME=${DB_NAME:-gitlabhq_production}
+DB_NAME=${DB_NAME:-observium}
 
 sed -i -e "s/\$config\['db_pass'\] = '.*';/\$config\['db_pass'\] = '$DB_PASS';/g" /data/config/config.php
 sed -i -e "s/\$config\['db_user'\] = '.*';/\$config\['db_user'\] = '$DB_USER';/g" /data/config/config.php

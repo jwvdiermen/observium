@@ -1,7 +1,12 @@
 Observium
 ====
 
-Observium is an autodiscovering network monitoring platform supporting a wide range of hardware platforms and operating systems
+Observium is an autodiscovering network monitoring platform supporting a wide range of hardware platforms and operating systems.
+
+---
+###Version
+===
+Observium CE: 0.15.6.6430
 
 ---
 ###Originally forked from
