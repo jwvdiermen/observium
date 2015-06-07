@@ -16,10 +16,7 @@ if [ ! -d /data/logs ]; then
 fi
 
 # Check if PHP database config exists. If not, copy in the default config
-if [ -f /data/config/config.php ]; then
-	echo "Using existing PHP database config file."
-	echo "/opt/observium/discovery.php -u" | at -M now + 1 minute
-else
+if [ ! -f /data/config/config.php ]; then
 	echo "Loading PHP config from default."
 	cp /opt/observium/config.php.default /data/config/config.php
 	chown nobody:users /data/config/config.php
@@ -123,3 +120,6 @@ if [ -z "${COUNT}" -o ${COUNT} -eq 0 ]; then
 	echo "Setting up Observium for firstrun."
 	php adduser.php observium observium 10
 fi
+
+/opt/observium/discovery.php -h all
+/opt/observium/discovery.php -u
