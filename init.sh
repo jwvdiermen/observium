@@ -121,5 +121,5 @@ if [ -z "${COUNT}" -o ${COUNT} -eq 0 ]; then
 	php adduser.php observium observium 10
 fi
 
-/opt/observium/discovery.php -h all
 /opt/observium/discovery.php -u
+/opt/observium/discovery.php -h all
