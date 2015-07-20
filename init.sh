@@ -14,6 +14,10 @@ if [ ! -d /data/logs ]; then
 	mkdir /data/logs
 	chown nobody:users /data/logs
 fi
+if [ ! -d /data/plugins ]; then
+	mkdir /data/plugins
+	chown nobody:users /data/plugins
+fi
 
 # Check if PHP database config exists. If not, copy in the default config
 if [ ! -f /data/config/config.php ]; then
@@ -23,6 +27,7 @@ if [ ! -f /data/config/config.php ]; then
 fi
 
 ln -s /data/config/config.php /opt/observium/config.php
+ln -s /data/rrd /opt/observium/rrd
 chown nobody:users -R /opt/observium
 chmod 755 -R /opt/observium
 
@@ -96,6 +101,23 @@ sed -i "/\$config\['log_dir'\].*;/d" /data/config/config.php
 echo "\$config['rrd_dir']       = \"/data/rrd\";" >> /data/config/config.php
 echo "\$config['log_file']      = \"/data/logs/observium.log\";" >> /data/config/config.php
 echo "\$config['log_dir']       = \"/data/logs\";" >> /data/config/config.php
+
+# checking for supported plugins
+#weathermap
+if [ -d /data/plugins/weathermap ]; then
+	sed -i -e "s/\$observium_base = '.*';/\$observium_base = '/opt/observium/';/g" /data/plugins/weathermap/data-pick.php
+	sed -i -e "s/\$ENABLED=false;/\$ENABLED=true;/g" /data/plugins/weathermap/editor.php
+	chown www-data:www-data /data/plugins/weathermap/configs/
+	mkdir -p /data/plugins/weathermap/maps
+	chown www-data:www-data /data/plugins/weathermap/maps
+	chmod +x /data/plugins/weathermap/map-poller.php
+	echo "*/5 * * * *   root    php /data/plugins/weathermap/map-poller.php >> /dev/null 2>&1" > /etc/cron.d/weathermap
+	rm -f /opt/observium/html/includes/navbar-custom.inc.php
+	ln -s /data/plugins/weathermap/navbar-custom.inc.php /opt/observium/html/includes/navbar-custom.inc.php
+	rm -f /opt/observium/html/weathermap
+	ln -s /data/plugins/weathermap /opt/observium/html/weathermap
+fi
+
 
 prog="mysqladmin -h ${DB_HOST} -P ${DB_PORT} -u ${DB_USER} ${DB_PASS:+-p$DB_PASS} status"
 timeout=60

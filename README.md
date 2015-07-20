@@ -6,8 +6,12 @@ Observium is an autodiscovering network monitoring platform supporting a wide ra
 ---
 ###Version
 ===
-Observium CE: 0.15.6.6430
-with bugfix from 28/06/2015
+- Observium CE: 0.15.6.6430 with bugfix from 28/06/2015
+
+---
+### Plugin support (new)
+===
+- weathermap: http://blog.best-practice.se/2014/07/using-php-weathermap-with-observium.html (description see below)
 
 ---
 ###Originally forked from
@@ -83,9 +87,22 @@ rm data/config/databases -rf
 - now run your observium container, like the example from above
 
 ---
+Plugins
+===
+- to use the weathermap plugin do following:
+
+```
+[change to your data folder on host]
+mkdir plugins (if it not exists. first run of this container will create it.)
+cd plugins
+git clone https://github.com/laf/Weathermap-for-Observium.git weathermap
+```
+
+
+---
 Credits
 ===
 
-Observium Community is an open source project and is copyright Observium Limited
-
-This docker image is built upon the baseimage made by phusion
+- Observium Community is an open source project and is copyright Observium Limited
+- This docker image is built upon the baseimage made by phusion
+- Thx to https://github.com/laf/ for the weathermap plugin
