@@ -105,4 +105,4 @@ Credits
 
 - Observium Community is an open source project and is copyright Observium Limited
 - This docker image is built upon the baseimage made by phusion
-- Thx to https://github.com/laf/ for the weathermap plugin
+- Thx to https://github.com/laf/ for the weathermap plugin 
