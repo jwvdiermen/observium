@@ -4,7 +4,7 @@ Observium
 Observium is an autodiscovering network monitoring platform supporting a wide range of hardware platforms and operating systems.
 
 ---
-###Version
+### Version
 ===
 - Observium CE: 0.15.6.6430 with bugfix from 28/06/2015
 
@@ -14,20 +14,20 @@ Observium is an autodiscovering network monitoring platform supporting a wide ra
 - weathermap: http://blog.best-practice.se/2014/07/using-php-weathermap-with-observium.html (description see below)
 
 ---
-###Originally forked from
+### Originally forked from
 
 Zuhkov <zuhkov@gmail.com>
 
 ---
 Usage example
 ===
-###Needed directories on host:
+### Needed directories on host:
 - data
 - mysql
 
 ### with sameersbn/mysql as database
 
-```
+```bash
 NAME="observium"
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 docker run -d -m 1g \
@@ -39,7 +39,7 @@ docker run -d -m 1g \
 	sameersbn/mysql:latest
 ```
 
-```
+```bash
 NAME="observium"
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 docker run -d \
@@ -65,7 +65,7 @@ Convert from older version with integrated DB to new container
 ===
 - we use "ocontainer" as container name. replace it with your name.
 
-```
+```bash
 mkdir mysql
 docker exec -it ocontainer mysqldump observium > mysql/observiumdb.sql
 mkdir data
@@ -75,7 +75,7 @@ chown nobody:users data -R
 
 - now run your db container, we use the example from above, then run this command (observium-db is the container name)
 
-```
+```bash
 echo "#!/bin/bash" > mysql/import.sh
 echo "mysql -u observium -pobserviumpwd observium < /var/lib/mysql/observiumdb.sql" >> mysql/import.sh
 chmod 0755 mysql/import.sh
@@ -91,7 +91,7 @@ Plugins
 ===
 - to use the weathermap plugin do following:
 
-```
+```bash
 [change to your data folder on host]
 mkdir plugins (if it not exists. first run of this container will create it.)
 cd plugins
