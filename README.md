@@ -4,17 +4,19 @@ Observium
 Observium is an autodiscovering network monitoring platform supporting a wide range of hardware platforms and operating systems.
 
 ---
-### Version
+Version
 ===
+
 - Observium CE: 0.15.6.6430 with bugfix from 28/06/2015
 
 ---
-### Plugin support (new)
+Plugin support (new)
 ===
+
 - weathermap: http://blog.best-practice.se/2014/07/using-php-weathermap-with-observium.html (description see below)
 
 ---
-### Originally forked from
+Originally forked from
 
 Zuhkov <zuhkov@gmail.com>
 
