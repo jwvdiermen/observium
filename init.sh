@@ -60,8 +60,8 @@ if [ -n "${MYSQL_PORT_3306_TCP_ADDR}" ]; then
 	# support for linked sameersbn/mysql image
 	DB_USER=${DB_USER:-${MYSQL_ENV_DB_USER}}
 	DB_PASS=${DB_PASS:-${MYSQL_ENV_DB_PASS}}
-	DB_NAME=${DB_NAME:-${MYSQL_ENV_DB_NAME}}	
-	
+	DB_NAME=${DB_NAME:-${MYSQL_ENV_DB_NAME}}
+
 	# support for linked orchardup/mysql and enturylink/mysql image
 	# also supports official mysql image
 	DB_USER=${DB_USER:-${MYSQL_ENV_MYSQL_USER}}
@@ -101,7 +101,8 @@ sed -i "/\$config\['log_dir'\].*;/d" /data/config/config.php
 echo "\$config['rrd_dir']       = \"/data/rrd\";" >> /data/config/config.php
 echo "\$config['log_file']      = \"/data/logs/observium.log\";" >> /data/config/config.php
 echo "\$config['log_dir']       = \"/data/logs\";" >> /data/config/config.php
-
+sed -i "/\$config\['db_extension'\] = 'mysqli';/d" /data/config/config.php
+echo "\$config['db_extension'] = 'mysqli';" >> /data/config/config.php
 # checking for supported plugins
 #weathermap
 if [ -d /data/plugins/weathermap ]; then

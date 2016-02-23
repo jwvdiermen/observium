@@ -7,7 +7,7 @@ Observium is an autodiscovering network monitoring platform supporting a wide ra
 Version
 ===
 
-- Observium CE: 0.15.6.6430 with bugfix from 28/06/2015
+- Observium CE: 0.16.1.7533
 
 ---
 Plugin support (new)
@@ -107,4 +107,4 @@ Credits
 
 - Observium Community is an open source project and is copyright Observium Limited
 - This docker image is built upon the baseimage made by phusion
-- Thx to https://github.com/laf/ for the weathermap plugin 
+- Thx to https://github.com/laf/ for the weathermap plugin
