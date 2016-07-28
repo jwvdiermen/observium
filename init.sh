@@ -138,7 +138,7 @@ QUERY="SELECT count(*) FROM information_schema.tables WHERE table_schema = '${DB
 COUNT=$(mysql -h ${DB_HOST} -P ${DB_PORT} -u ${DB_USER} ${DB_PASS:+-p$DB_PASS} -ss -e "${QUERY}")
 
 cd /opt/observium
-php includes/update/update.php
+php ./discovery.php -u
 if [ -z "${COUNT}" -o ${COUNT} -eq 0 ]; then
 	echo "Setting up Observium for firstrun."
 	php adduser.php observium observium 10
