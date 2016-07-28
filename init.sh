@@ -91,17 +91,17 @@ esac
 DB_USER=${DB_USER:-root}
 DB_NAME=${DB_NAME:-observium}
 
-sed -i -e "s/\$config\['db_pass'\] = '.*';/\$config\['db_pass'\] = '$DB_PASS';/g" /data/config/config.php
-sed -i -e "s/\$config\['db_user'\] = '.*';/\$config\['db_user'\] = '$DB_USER';/g" /data/config/config.php
-sed -i -e "s/\$config\['db_host'\] = '.*';/\$config\['db_host'\] = '$DB_HOST';/g" /data/config/config.php
-sed -i -e "s/\$config\['db_name'\] = '.*';/\$config\['db_name'\] = '$DB_NAME';/g" /data/config/config.php
+sed -i -e "s/\$config\['db_pass'\]\s*=\s*'.*';/\$config\['db_pass'\] = '$DB_PASS';/g" /data/config/config.php
+sed -i -e "s/\$config\['db_user'\]\s*=\s*'.*';/\$config\['db_user'\] = '$DB_USER';/g" /data/config/config.php
+sed -i -e "s/\$config\['db_host'\]\s*=\s*'.*';/\$config\['db_host'\] = '$DB_HOST';/g" /data/config/config.php
+sed -i -e "s/\$config\['db_name'\]\s*=\s*'.*';/\$config\['db_name'\] = '$DB_NAME';/g" /data/config/config.php
 sed -i "/\$config\['rrd_dir'\].*;/d" /data/config/config.php
 sed -i "/\$config\['log_file'\].*;/d" /data/config/config.php
 sed -i "/\$config\['log_dir'\].*;/d" /data/config/config.php
 echo "\$config['rrd_dir']       = \"/data/rrd\";" >> /data/config/config.php
 echo "\$config['log_file']      = \"/data/logs/observium.log\";" >> /data/config/config.php
 echo "\$config['log_dir']       = \"/data/logs\";" >> /data/config/config.php
-sed -i "/\$config\['db_extension'\] = 'mysqli';/d" /data/config/config.php
+sed -i "/\$config\['db_extension'\]\s*=\s*'mysqli';/d" /data/config/config.php
 echo "\$config['db_extension'] = 'mysqli';" >> /data/config/config.php
 # checking for supported plugins
 #weathermap
